@@ -1,0 +1,17 @@
+<html>
+
+<head>
+  <title><%= title %></title>
+</head>
+
+<body>
+    <%- include('partials/navbar', {links}) %>
+    <form method="POST" action="/new">
+      <h1>Type your beautiful message</h1>
+      <input name="messageUser" type="text" placeholder="User">
+      <input name="messageText" type="text" placeholder="Message">
+      <button type="submit">Submit</button>
+    </form>
+</body>
+
+</html>

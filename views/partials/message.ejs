@@ -1,0 +1,6 @@
+<li>
+    <% const href = `/message/${message.id}`%>
+    <span>User: <span><%= message.username.length <= 10 ? message.username : message.username.substring(0,10)+'...' %></span></span>
+    <span>Message: <span><%= message.message.length <= 20 ? message.message : message.message.substring(0,20)+'...' %></span> </span>
+    <a href=<%=href%>>open</a>
+</li>
