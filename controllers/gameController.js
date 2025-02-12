@@ -2,7 +2,7 @@ const db = require('../db/queries');
 
 
 async function getAllGames(req, res) {
-    const games = await db.getAllgames();
+    const games = await db.getAllGames();
     console.log(games);
     res.render("main", { title: "Mini gameboard", games });
     res.end();
@@ -10,19 +10,21 @@ async function getAllGames(req, res) {
 
 async function getGame(req, res) {
     console.log(req.params.gameId);
-    const game = await db.getgame(req.params.gameId);
+    const game = await db.getGame(req.params.gameId);
     console.log(game);
     res.render('gameDetails', { game: game[0] });
 };
 
 function createGameGet(req, res) {
-    res.render('form', { title: 'New game form' });
+    res.render('newGameForm', { title: 'New game form' });
 };
 
 async function createGamePost(req, res) {
-    const username = req.body.gameUser;
-    const game = req.body.gameText;
-    await db.insertgame(username, game);
+    const title = req.body.title;
+    const release_year = req.body.release_year;
+    const min_players = req.body.min_players;
+    const max_players = req.body.max_players;
+    await db.insertGame(title, release_year, min_players, max_players);
     res.redirect('/');
 };
 
