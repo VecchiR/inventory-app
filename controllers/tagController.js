@@ -1,34 +1,34 @@
 const db = require('../db/queries');
 
 
-async function getAllMessages(req, res) {
-    const messages = await db.getAllMessages();
-    console.log(messages);
-    res.render("index", { title: "Mini Messageboard", messages });
+async function getAllTags(req, res) {
+    const tags = await db.getAlltags();
+    console.log(tags);
+    res.render("index", { title: "Inventory App", tags });
 };
 
-async function getMessage(req, res) {
-    const message = await db.getMessage(req.params.messageId);
-    res.render('messageDetails', { message: message[0] });
+async function getTag(req, res) {
+    const tag = await db.gettag(req.params.tagId);
+    res.render('tagDetails', { tag: tag[0] });
 };
 
-function createMessageGet(req, res) {
-    res.render('form', { title: 'New message form' });
+function createTagGet(req, res) {
+    res.render('form', { title: 'New tag form' });
 };
 
-async function createMessagePost(req, res) {
-    const username = req.body.messageUser;
-    const message = req.body.messageText;
-    await db.insertMessage(username, message);
+async function createTagPost(req, res) {
+    const username = req.body.tagUser;
+    const tag = req.body.tagText;
+    await db.inserttag(username, tag);
     res.redirect('/');
 };
 
 
 module.exports = {
-    getAllMessages,
-    getMessage,
-    createMessageGet,
-    createMessagePost
+    getAllTags,
+    getTag,
+    createTagGet,
+    createTagPost
 }
 
 

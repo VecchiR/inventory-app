@@ -1,10 +1,8 @@
 require("dotenv").config();
 const express = require("express");
 const path = require("node:path");
-const indexRouter = require("./routes/indexRouter");
-const gameRouter = require("./routes/gameRouter");
-// const tagRouter = require("./routes/tagRouter");
-// const platformRouter = require("./routes/platformRouter");
+const { Pool } = require("pg");
+
 
 const app = express();
 
@@ -21,8 +19,15 @@ app.listen(PORT, () => {
 
 app.use(express.urlencoded({ extended: true }));
 
-app.use("/", indexRouter);
-app.use("/game", gameRouter);
-// app.use("/tag", tagRouter);
-// app.use("/platform", platformRouter);
 
+const pul = new Pool({connectionString: process.env.CONNECTION_STRING});
+async function getAllGames() {
+  const { rows } = await pul.query("SELECT * FROM games");
+  return rows;
+}
+
+
+app.use("/", async (req, res) => {
+    const test = await getAllGames();
+    console.log(test);
+} )

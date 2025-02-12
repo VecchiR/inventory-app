@@ -1,25 +1,25 @@
 const pool = require("./pool");
 
-async function getAllMessages() {
-  const { rows } = await pool.query("SELECT * FROM messages");
+async function getAllgames() {
+  const { rows } = await pool.query("SELECT * FROM games");
   return rows;
 }
 
-async function getMessage(messageId) {  
-  const { rows } = await pool.query(`SELECT * FROM messages WHERE id = ($1)`, [messageId]);
+async function getgame(gameId) {  
+  const { rows } = await pool.query(`SELECT * FROM games WHERE id = ($1)`, [gameId]);
   console.log(rows);
   return rows;
 };
 
-async function insertMessage(username, message) {
-  await pool.query("INSERT INTO messages (username, message) VALUES ($1, $2)", [username, message]);
+async function insertgame(username, game) {
+  await pool.query("INSERT INTO games (username, game) VALUES ($1, $2)", [username, game]);
 }
 
 
 
 
 module.exports = {
-  getAllMessages,
-  getMessage,
-  insertMessage,
+  getAllgames,
+  getgame,
+  insertgame,
 };
