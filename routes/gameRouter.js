@@ -5,8 +5,9 @@ const router = Router();
 
 router.get("/new", gameController.createGameGet);
 router.post("/new", gameController.createGamePost);
-router.get("/:gameId/edit", gameController.updateGameGet);
-router.post("/:gameId/edit", gameController.updateGamePost);
+router.get("/:gameId/update", gameController.updateGameGet);
+router.post("/:gameId/update", gameController.updateGamePost);
+router.post("/:gameId/delete", gameController.deleteGamePost);
 router.get("/:gameId", gameController.getGame);
 
 

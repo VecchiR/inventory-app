@@ -45,6 +45,12 @@ async function updateGamePost(req, res) {
     res.redirect('/');
 };
 
+async function deleteGamePost(req, res) {
+    const gameId = req.params.gameId;
+    await db.deleteGame(gameId);
+    res.redirect('/');
+};
+
 
 module.exports = {
     getAllGames,
@@ -52,7 +58,8 @@ module.exports = {
     createGameGet,
     createGamePost,
     updateGameGet,
-    updateGamePost
+    updateGamePost,
+    deleteGamePost
 }
 
 

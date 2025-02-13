@@ -6,7 +6,7 @@
 
 <body>
     <!-- < %- include('partials/navbar', {links}) %> -->
-    <form method="POST" action=<%= `/game/${game.id}/edit` %>>
+    <form method="POST" action=<%= `/game/${game.id}/update` %>>
       <h1>Edit game</h1>
       <input name="title" type="text" placeholder="Title" value="<%= game.title %>" >
       <input name="release_year" type="number" placeholder="Release Year" value="<%= game.release_year %>" >
