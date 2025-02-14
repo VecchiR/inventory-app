@@ -3,15 +3,14 @@ const links = require('../routes/links');
 
 async function getAllGames(req, res) {
     const games = await db.getAllGames();
-    console.log(games);
     res.render("main", { title: "Mini gameboard", games, links });
 };
 
 async function getGame(req, res) {
-    console.log(req.params.gameId);
     const game = await db.getGame(req.params.gameId);
-    console.log(game);
-    res.render('game_views/gameDetails', { game: game[0] });
+    const gamePlatforms = await db.getGamePlatforms(req.params.gameId);
+    console.log(gamePlatforms);
+    res.render('game_views/gameDetails', { game: game[0], gamePlatforms });
 };
 
 async function updateGameGet(req, res) {

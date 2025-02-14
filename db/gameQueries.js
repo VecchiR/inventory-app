@@ -7,7 +7,6 @@ async function getAllGames() {
 
 async function getGame(gameId) {  
   const { rows } = await pool.query(`SELECT * FROM games WHERE id = ($1)`, [gameId]);
-  console.log(rows);
   return rows;
 };
 
@@ -23,11 +22,21 @@ async function deleteGame(gameId) {
   await pool.query("DELETE FROM games WHERE id = ($1)", [gameId]);
 }
 
+async function getGamePlatforms(gameId) {
+  const { rows } = await pool.query(`
+    SELECT name 
+    FROM platforms JOIN game_platforms ON (id = platform_id)
+    WHERE game_id = ($1)
+    `, [gameId]);
+  return rows;
+}
+
 
 module.exports = {
   getAllGames,
   getGame,
   insertGame,
   updateGame,
-  deleteGame
+  deleteGame,
+  getGamePlatforms
 };
