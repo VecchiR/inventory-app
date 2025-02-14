@@ -1,0 +1,16 @@
+<html>
+
+<head>
+  <title><%= title %></title>
+</head>
+
+<body>
+    <!-- < %- include('partials/navbar', {links}) %> -->
+    <form method="POST" action=<%= `/platform/${platform.id}/update` %>>
+      <h1>Edit platform</h1>
+      <input name="name" type="text" placeholder="Name" value="<%= platform.name %>" >
+      <button type="submit">Submit</button>
+    </form>
+</body>
+
+</html>

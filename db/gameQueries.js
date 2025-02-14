@@ -24,8 +24,6 @@ async function deleteGame(gameId) {
 }
 
 
-
-
 module.exports = {
   getAllGames,
   getGame,

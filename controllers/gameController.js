@@ -1,29 +1,28 @@
-const db = require('../db/queries');
-
+const db = require('../db/gameQueries');
+const links = require('../routes/links');
 
 async function getAllGames(req, res) {
     const games = await db.getAllGames();
     console.log(games);
-    res.render("main", { title: "Mini gameboard", games });
-    res.end();
+    res.render("main", { title: "Mini gameboard", games, links });
 };
 
 async function getGame(req, res) {
     console.log(req.params.gameId);
     const game = await db.getGame(req.params.gameId);
     console.log(game);
-    res.render('gameDetails', { game: game[0] });
+    res.render('game_views/gameDetails', { game: game[0] });
 };
 
 async function updateGameGet(req, res) {
     console.log(req.params.gameId);
     const game = await db.getGame(req.params.gameId);
     console.log(game);
-    res.render('updateGameForm', { title:"Edit game", game: game[0] });
+    res.render('game_views/updateGameForm', { title: "Edit game", game: game[0] });
 };
 
 function createGameGet(req, res) {
-    res.render('newGameForm', { title: 'New game form' });
+    res.render('game_views/newGameForm', { title: 'New game form' });
 };
 
 async function createGamePost(req, res) {

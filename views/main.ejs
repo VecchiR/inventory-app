@@ -5,7 +5,7 @@
 </head>
 
 <body>
-  <!-- < %include('partials/navbar', {links}) %> -->
+  <%- include('partials/navbar', {links}) %>
   <ul>
     <% games.forEach((game)=> { %>
     <%- include('partials/game', {game}); %>

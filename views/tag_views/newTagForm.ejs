@@ -1,0 +1,16 @@
+<html>
+
+<head>
+  <title><%= title %></title>
+</head>
+
+<body>
+    <!-- < %- include('partials/navbar', {links}) %> -->
+    <form method="POST" action="/tag/new">
+      <h1>Add a new tag</h1>
+      <input name="name" type="text" placeholder="Name">
+      <button type="submit">Submit</button>
+    </form>
+</body>
+
+</html>

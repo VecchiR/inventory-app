@@ -1,0 +1,17 @@
+<html>
+
+<head>
+  <title><%= title %></title>
+</head>
+
+<body>
+  <%- include('../partials/navbar', {links}) %>
+  <ul>
+    <% tags.forEach((tag)=> { %>
+    <%- include('../partials/tag', {tag}); %>
+    <% }); %>
+  </ul>
+  <a href="/tag/new">add new tag</a>
+</body>
+
+</html>

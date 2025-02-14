@@ -1,0 +1,17 @@
+<html>
+
+<head>
+  <title><%= title %></title>
+</head>
+
+<body>
+  <%- include('../partials/navbar', {links}) %>
+  <ul>
+    <% platforms.forEach((platform)=> { %>
+    <%- include('../partials/platform', {platform}); %>
+    <% }); %>
+  </ul>
+  <a href="/platform/new">add new platform</a>
+</body>
+
+</html>

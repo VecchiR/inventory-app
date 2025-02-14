@@ -1,34 +1,66 @@
-const db = require('../db/queries');
+const db = require('../db/platformQueries');
+const links = require('../routes/links');
 
 
-async function getAllMessages(req, res) {
-    const messages = await db.getAllMessages();
-    console.log(messages);
-    res.render("index", { title: "Mini Messageboard", messages });
+
+async function getAllPlatforms(req, res) {
+    const platforms = await db.getAllPlatforms();
+    console.log(platforms);
+    res.render("platform_views/allPlatforms", { title: "Platforms", platforms, links });
 };
 
-async function getMessage(req, res) {
-    const message = await db.getMessage(req.params.messageId);
-    res.render('messageDetails', { message: message[0] });
+// async function getPlatform(req, res) {
+//     console.log(req.params.platformId);
+//     const platform = await db.getPlatform(req.params.platformId);
+//     console.log(platform);
+//     res.render('platform_views/platformDetails', { platform: platform[0] });
+// };
+
+async function updatePlatformGet(req, res) {
+    console.log(req.params.platformId);
+    const platform = await db.getPlatform(req.params.platformId);
+    console.log(platform);
+    res.render('platform_views/updatePlatformForm', { title:"Edit platform", platform: platform[0] });
 };
 
-function createMessageGet(req, res) {
-    res.render('form', { title: 'New message form' });
+function createPlatformGet(req, res) {
+    res.render('platform_views/newPlatformForm', { title: 'New platform form' });
 };
 
-async function createMessagePost(req, res) {
-    const username = req.body.messageUser;
-    const message = req.body.messageText;
-    await db.insertMessage(username, message);
-    res.redirect('/');
+async function createPlatformPost(req, res) {
+    const name = req.body.name;
+    await db.insertPlatform(name);
+    res.redirect('/platform');
+};
+
+async function updatePlatformPost(req, res) {
+    const platformId = req.params.platformId;
+    console.log("this is coming from updatePlatformPost. This is the platformId: ", platformId); // this is ok
+    const name = req.body.name;
+    try{    
+        await db.updatePlatform(platformId, name); // here is the error ->
+    }
+    catch (err){
+        console.log('the error is in the try catch', err);
+    }
+    res.redirect('/platform');
+};
+
+async function deletePlatformPost(req, res) {
+    const platformId = req.params.platformId;
+    await db.deletePlatform(platformId);
+    res.redirect('/platform');
 };
 
 
 module.exports = {
-    getAllMessages,
-    getMessage,
-    createMessageGet,
-    createMessagePost
+    getAllPlatforms,
+    // getPlatform,
+    createPlatformGet,
+    createPlatformPost,
+    updatePlatformGet,
+    updatePlatformPost,
+    deletePlatformPost
 }
 
 
