@@ -5,13 +5,14 @@ async function getAllGames() {
   return rows;
 }
 
-async function getGame(gameId) {  
+async function getGame(gameId) {
   const { rows } = await pool.query(`SELECT * FROM games WHERE id = ($1)`, [gameId]);
   return rows;
 };
 
 async function insertGame(title, release_year, min_players, max_players) {
-  await pool.query("INSERT INTO games (title, release_year, min_players, max_players) VALUES ($1, $2, $3, $4)", [title, release_year, min_players, max_players]);
+  const result = await pool.query("INSERT INTO games (title, release_year, min_players, max_players) VALUES ($1, $2, $3, $4) RETURNING id", [title, release_year, min_players, max_players]);
+  return result.rows[0].id;
 }
 
 async function updateGame(gameId, title, release_year, min_players, max_players) {
@@ -31,6 +32,11 @@ async function getGamePlatforms(gameId) {
   return rows;
 }
 
+async function insertGamePlatform(gameId, platformId) {
+  await pool.query("INSERT INTO game_platforms (game_id, platform_id) VALUES ($1, $2)", [gameId, platformId]);
+}
+
+
 
 module.exports = {
   getAllGames,
@@ -38,5 +44,6 @@ module.exports = {
   insertGame,
   updateGame,
   deleteGame,
-  getGamePlatforms
+  getGamePlatforms,
+  insertGamePlatform
 };

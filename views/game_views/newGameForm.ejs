@@ -1,19 +1,35 @@
 <html>
 
 <head>
-  <title><%= title %></title>
+  <title>
+    <%= title %>
+  </title>
 </head>
 
 <body>
-    <!-- < %- include('partials/navbar', {links}) %> -->
-    <form method="POST" action="/game/new">
-      <h1>Add a new game</h1>
-      <input name="title" type="text" placeholder="Title">
-      <input name="release_year" type="number" placeholder="Release Year">
-      <input name="min_players" type="number" placeholder="Min. Players">
-      <input name="max_players" type="number" placeholder="Max. Players">
-      <button type="submit">Submit</button>
-    </form>
+  <!-- < %- include('partials/navbar', {links}) %> -->
+  <form method="POST" action="/game/new">
+    <h1>Add a new game</h1>
+    <input name="title" type="text" placeholder="Title">
+    <input name="release_year" type="number" placeholder="Release Year">
+    <input name="min_players" type="number" placeholder="Min. Players">
+    <input name="max_players" type="number" placeholder="Max. Players">
+
+    <fieldset>
+      <legend>Platforms:</legend>
+      <ul>
+        <% platforms.forEach(platform=> {%>
+          <li>
+            <label for=<%=platform.id %> ><%= platform.name %></label>
+            <input type="checkbox" id=<%=platform.id %> name="platforms" value=<%= platform.id %> />
+          </li>
+          <%}); %>
+      </ul>
+    </fieldset>
+
+
+    <button type="submit">Submit</button>
+  </form>
 </body>
 
 </html>
