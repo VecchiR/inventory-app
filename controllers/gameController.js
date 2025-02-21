@@ -10,15 +10,14 @@ async function getAllGames(req, res) {
 async function getGame(req, res) {
     const game = await gamesDb.getGame(req.params.gameId);
     const gamePlatforms = await gamesDb.getGamePlatforms(req.params.gameId);
-    console.log(gamePlatforms);
     res.render('game_views/gameDetails', { game: game[0], gamePlatforms });
 };
 
 async function updateGameGet(req, res) {
-    console.log(req.params.gameId);
     const game = await gamesDb.getGame(req.params.gameId);
-    console.log(game);
-    res.render('game_views/updateGameForm', { title: "Edit game", game: game[0] });
+    const platforms = await platformsDb.getAllPlatforms();
+    const gamePlatforms = await gamesDb.getGamePlatforms(req.params.gameId);
+    res.render('game_views/updateGameForm', { title: "Edit game", game: game[0], platforms, gamePlatforms });
 };
 
 async function createGameGet(req, res) {
@@ -58,7 +57,36 @@ async function updateGamePost(req, res) {
     const min_players = req.body.min_players;
     const max_players = req.body.max_players;
     await gamesDb.updateGame(gameId, title, release_year, min_players, max_players);
-    res.redirect('/');
+
+
+    const checkedPlatforms = [];
+
+    if (!req.body.platforms) {
+        // somethign
+    }
+
+    else if (Array.isArray(req.body.platforms)) {
+        req.body.platforms.forEach(p => checkedPlatforms.push(Number(p)));
+    }
+    else { checkedPlatforms.push(Number(req.body.platforms)); }
+
+
+    console.log(checkedPlatforms);
+
+
+
+
+
+
+    // await gamesDb.test(gameId, checkedPlatforms);
+    // res.redirect(`/game/${gameId}/update`);
+
+
+
+    await gamesDb.insertGamePlatformsForUpdate(gameId, checkedPlatforms);
+
+    res.redirect(`/game/${gameId}/update`);
+    // res.redirect(`/game/${gameId}`);
 };
 
 async function deleteGamePost(req, res) {
