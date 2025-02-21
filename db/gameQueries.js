@@ -37,8 +37,6 @@ async function insertGamePlatform(gameId, platformId) {
 }
 
 async function insertGamePlatformsForUpdate(gameId, platformIds) {
-  console.log("platformIds: ", platformIds);
-  console.log("length: ", platformIds.length);
   if (platformIds.length === 0) {
 
     await pool.query(`
@@ -48,7 +46,6 @@ async function insertGamePlatformsForUpdate(gameId, platformIds) {
     return;
   }
   const values = `${platformIds.map(p => "(" + gameId + "," + p + ")")}`;
-  console.log("values:", values);
   try {
     await pool.query(
       `INSERT INTO game_platforms (game_id, platform_id)
@@ -61,6 +58,8 @@ async function insertGamePlatformsForUpdate(gameId, platformIds) {
     );
   } catch (error) {
     console.log("query to add error");
+    console.log(error);
+
   }
 
 
@@ -81,6 +80,64 @@ async function insertGamePlatformsForUpdate(gameId, platformIds) {
 }
 
 
+
+async function getGameTags(gameId) {
+  const { rows } = await pool.query(`
+    SELECT * 
+    FROM tags JOIN game_tags ON (id = tag_id)
+    WHERE game_id = ($1)
+    `, [gameId]);
+  return rows;
+}
+
+async function insertGameTag(gameId, tagId) {
+  await pool.query("INSERT INTO game_tags (game_id, tag_id) VALUES ($1, $2)", [gameId, tagId]);
+}
+
+async function insertGameTagsForUpdate(gameId, tagIds) {
+  if (tagIds.length === 0) {
+
+    await pool.query(`
+      DELETE FROM game_tags
+      WHERE game_id = ${gameId}
+        `);
+    return;
+  }
+  const values = `${tagIds.map(p => "(" + gameId + "," + p + ")")}`;
+  try {
+    await pool.query(
+      `INSERT INTO game_tags (game_id, tag_id)
+       SELECT * FROM (VALUES ${values} ) AS new_entries(game_id, tag_id)
+        WHERE NOT EXISTS (
+       SELECT 1 FROM game_tags 
+        WHERE game_id = new_entries.game_id 
+        AND tag_id = new_entries.tag_id)
+        `
+    );
+  } catch (error) {
+    console.log("query to add error");
+    console.log(error);
+
+  }
+
+
+  try {
+    await pool.query(`
+    DELETE FROM game_tags
+    WHERE game_id = ${gameId}
+    AND (game_id, tag_id) NOT IN (
+    SELECT game_id, tag_id
+    FROM (VALUES ${values}) AS checked(game_id, tag_id)
+    )
+      `);
+  } catch (error) {
+    console.log("query to delete error");
+    console.log(error);
+  }
+
+}
+
+
 module.exports = {
   getAllGames,
   getGame,
@@ -90,4 +147,7 @@ module.exports = {
   getGamePlatforms,
   insertGamePlatform,
   insertGamePlatformsForUpdate,
+  getGameTags,
+  insertGameTag,
+  insertGameTagsForUpdate,
 };

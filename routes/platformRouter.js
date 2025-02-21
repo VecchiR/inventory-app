@@ -8,7 +8,6 @@ router.post("/new", platformController.createPlatformPost);
 router.get("/:platformId/update", platformController.updatePlatformGet);
 router.post("/:platformId/update", platformController.updatePlatformPost);
 router.post("/:platformId/delete", platformController.deletePlatformPost);
-// router.get("/:platformId", platformController.getPlatform);
 router.get("/", platformController.getAllPlatforms);
 
 

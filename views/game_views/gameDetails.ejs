@@ -9,6 +9,11 @@
  <% }); %>
 </p>
 
+<p>Tags: 
+  <% gameTags.forEach(tag => { %>
+    <span> <%= tag.name %> </span>
+ <% }); %>
+</p>
 
 <a href=<%= `/game/${game.id}/update` %>>Edit</a>
 <form action=<%= `/game/${game.id}/delete` %> method="POST" style="display:inline;">

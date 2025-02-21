@@ -8,7 +8,6 @@ router.post("/new", tagController.createTagPost);
 router.get("/:tagId/update", tagController.updateTagGet);
 router.post("/:tagId/update", tagController.updateTagPost);
 router.post("/:tagId/delete", tagController.deleteTagPost);
-// router.get("/:tagId", tagController.getTag);
 router.get("/", tagController.getAllTags);
 
 

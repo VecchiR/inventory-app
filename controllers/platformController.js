@@ -5,21 +5,12 @@ const links = require('../routes/links');
 
 async function getAllPlatforms(req, res) {
     const platforms = await db.getAllPlatforms();
-    console.log(platforms);
     res.render("platform_views/allPlatforms", { title: "Platforms", platforms, links });
 };
 
-// async function getPlatform(req, res) {
-//     console.log(req.params.platformId);
-//     const platform = await db.getPlatform(req.params.platformId);
-//     console.log(platform);
-//     res.render('platform_views/platformDetails', { platform: platform[0] });
-// };
 
 async function updatePlatformGet(req, res) {
-    console.log(req.params.platformId);
     const platform = await db.getPlatform(req.params.platformId);
-    console.log(platform);
     res.render('platform_views/updatePlatformForm', { title:"Edit platform", platform: platform[0] });
 };
 
@@ -35,10 +26,9 @@ async function createPlatformPost(req, res) {
 
 async function updatePlatformPost(req, res) {
     const platformId = req.params.platformId;
-    console.log("this is coming from updatePlatformPost. This is the platformId: ", platformId); // this is ok
     const name = req.body.name;
     try{    
-        await db.updatePlatform(platformId, name); // here is the error ->
+        await db.updatePlatform(platformId, name);
     }
     catch (err){
         console.log('the error is in the try catch', err);
@@ -55,7 +45,6 @@ async function deletePlatformPost(req, res) {
 
 module.exports = {
     getAllPlatforms,
-    // getPlatform,
     createPlatformGet,
     createPlatformPost,
     updatePlatformGet,
