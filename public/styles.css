@@ -16,7 +16,7 @@ ul {
 
 .game-item {
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
+    grid-template-columns: repeat(5, 1fr);
 }
 
 .game-item img {

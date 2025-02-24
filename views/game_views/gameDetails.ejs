@@ -13,13 +13,17 @@
   
   <p>Platforms:
     <% gamePlatforms.forEach(platform => { %>
-      <span> <%= platform.name %> </span>
+      <a href=<%=`/platform/${platform.id}`%>>
+        <span> <%= platform.name %> </span>
+      </a>
    <% }); %>
   </p>
   
   <p>Tags:
     <% gameTags.forEach(tag => { %>
-      <span> <%= tag.name %> </span>
+      <a href=<%=`/tag/${tag.id}`%>>
+        <span> <%= tag.name %> </span>
+      </a>
    <% }); %>
   </p>
   

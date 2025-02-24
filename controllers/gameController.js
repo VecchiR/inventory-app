@@ -5,7 +5,7 @@ const links = require('../routes/links');
 
 async function getAllGames(req, res) {
     const games = await gamesDb.getAllGames();
-    res.render("main", { title: "All Games", games, links });
+    res.render("main", { title: "All games", games, links });
 };
 
 async function getGame(req, res) {
@@ -106,14 +106,14 @@ async function getGamesByPlatform(req, res) {
     const platform = await platformsDb.getPlatform(req.params.platformId);
     const platformName = platform[0].name;
     const games = await gamesDb.getGamesByPlatform(req.params.platformId);
-    res.render("main", { title: `${platformName} Games`, games, links })
+    res.render("main", { title: `${platformName} games`, games, links })
 };
 
 async function getGamesByTag(req, res) {
     const tag = await tagsDb.getTag(req.params.tagId);
     const tagName = tag[0].name;
     const games = await gamesDb.getGamesByTag(req.params.tagId);
-    res.render("main", { title: `${tagName} Games`, games, links })
+    res.render("main", { title: `${tagName} games`, games, links })
 };
 
 
