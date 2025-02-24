@@ -1,17 +1,33 @@
 <html>
 
 <head>
-  <title><%= title %></title>
+  <title>
+    <%= title %>
+  </title>
+  <link rel="stylesheet" href="/styles.css">
+
 </head>
 
 <body>
-  <%- include('partials/navbar', {links}) %>
-  <ul>
-    <% games.forEach((game)=> { %>
-    <%- include('partials/game', {game}); %>
-    <% }); %>
-  </ul>
-  <a href="/game/new">add new game</a>
+  <%- include('partials/header', {links}) %>
+    <h1>
+      <%= title %>
+    </h1>
+    <ul class="games-list">
+      <li class="game-item">
+        <span>cover</span>
+        <span>title</span>
+        <span>year</span>
+        <span>platforms</span>
+        <span>min. players</span>
+        <span>max. players</span>
+        <span>tags</span>
+      </li>
+      <% games.forEach((game)=> { %>
+        <%- include('partials/game', {game}); %>
+          <% }); %>
+    </ul>
+    <a href="/game/new">add new game</a>
 </body>
 
 </html>

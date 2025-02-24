@@ -2,10 +2,13 @@
 
 <head>
   <title><%= title %></title>
+  <link rel="stylesheet" href="/styles.css">
+
 </head>
 
 <body>
-  <%- include('../partials/navbar', {links}) %>
+  <%- include('../partials/header', {links}) %>
+
   <ul>
     <% platforms.forEach((platform)=> { %>
     <%- include('../partials/platform', {platform}); %>

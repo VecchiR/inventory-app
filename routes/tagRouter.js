@@ -1,5 +1,6 @@
 const { Router } = require("express");
 const tagController = require("../controllers/tagController");
+const gameController = require("../controllers/gameController");
 
 const router = Router();
 
@@ -8,6 +9,7 @@ router.post("/new", tagController.createTagPost);
 router.get("/:tagId/update", tagController.updateTagGet);
 router.post("/:tagId/update", tagController.updateTagPost);
 router.post("/:tagId/delete", tagController.deleteTagPost);
+router.get("/:tagId", gameController.getGamesByTag);
 router.get("/", tagController.getAllTags);
 
 

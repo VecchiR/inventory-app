@@ -2,10 +2,12 @@
 
 <head>
   <title><%= title %></title>
+  <link rel="stylesheet" href="/styles.css">
+
 </head>
 
 <body>
-  <%- include('../partials/navbar', {links}) %>
+  <%- include('../partials/header', {links}) %>
   <ul>
     <% tags.forEach((tag)=> { %>
     <%- include('../partials/tag', {tag}); %>

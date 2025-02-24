@@ -1,7 +1,7 @@
-<li>
-    <span>Title: <span><%= game.title%></span></span>
-    <span>Released: <span><%= game.release_year %></span> </span>
-    
+<li class="game-item">
     <% const href = `/game/${game.id}`%>
-    <a href=<%=href%>>open</a>
+    <a href=<%=href%>><img  src=<%= game.image_url %> alt="game cover"></a>
+    <a href=<%=href%>><span><%= game.title%></span></a>
+    <span><%= game.release_year %></span>
+    
 </li>

@@ -10,12 +10,29 @@ async function getGame(gameId) {
   return rows;
 };
 
+async function getGamesByPlatform(platformId) {
+  const { rows } = await pool.query(`
+    SELECT * FROM games JOIN game_platforms ON id = game_id 
+    WHERE platform_id = ($1)`, [platformId]);
+  return rows;
+};
+
+async function getGamesByTag(tagId) {
+  const { rows } = await pool.query(`
+    SELECT * FROM games JOIN game_tags ON id = game_id 
+    WHERE tag_id = ($1)`, [tagId]);
+  return rows;
+};
+
+
 async function insertGame(title, release_year, min_players, max_players, image_url) {
+  if (!image_url) { image_url = '/default-image.jpg' }
   const result = await pool.query("INSERT INTO games (title, release_year, min_players, max_players, image_url) VALUES ($1, $2, $3, $4, $5) RETURNING id", [title, release_year, min_players, max_players, image_url]);
   return result.rows[0].id;
 }
 
 async function updateGame(gameId, title, release_year, min_players, max_players, image_url) {
+  if (!image_url) { image_url = '/default-image.jpg' }
   await pool.query("UPDATE games SET (title, release_year, min_players, max_players, image_url) = ($2, $3, $4, $5, $6) WHERE  id = ($1)", [gameId, title, release_year, min_players, max_players, image_url]);
 }
 
@@ -150,4 +167,6 @@ module.exports = {
   getGameTags,
   insertGameTag,
   insertGameTagsForUpdate,
+  getGamesByPlatform,
+  getGamesByTag
 };
