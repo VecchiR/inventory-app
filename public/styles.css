@@ -1,0 +1,25 @@
+header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav ul {
+    display: flex;
+    gap: 20px;
+}
+
+ul {
+    list-style: none;
+}
+
+.game-item {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+}
+
+.game-item img {
+    width: 60px;
+    height: 60px;
+}

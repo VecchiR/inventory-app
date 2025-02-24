@@ -12,7 +12,7 @@ async function getGame(req, res) {
     const game = await gamesDb.getGame(req.params.gameId);
     const gamePlatforms = await gamesDb.getGamePlatforms(req.params.gameId);
     const gameTags = await gamesDb.getGameTags(req.params.gameId);
-    res.render('game_views/gameDetails', { game: game[0], gamePlatforms, gameTags });
+    res.render('game_views/gameDetails', { links, game: game[0], gamePlatforms, gameTags });
 };
 
 async function updateGameGet(req, res) {
@@ -102,6 +102,20 @@ async function deleteGamePost(req, res) {
     res.redirect('/');
 };
 
+async function getGamesByPlatform(req, res) {
+    const platform = await platformsDb.getPlatform(req.params.platformId);
+    const platformName = platform[0].name;
+    const games = await gamesDb.getGamesByPlatform(req.params.platformId);
+    res.render("main", { title: `${platformName} Games`, games, links })
+};
+
+async function getGamesByTag(req, res) {
+    const tag = await tagsDb.getTag(req.params.tagId);
+    const tagName = tag[0].name;
+    const games = await gamesDb.getGamesByTag(req.params.tagId);
+    res.render("main", { title: `${tagName} Games`, games, links })
+};
+
 
 module.exports = {
     getAllGames,
@@ -110,7 +124,9 @@ module.exports = {
     createGamePost,
     updateGameGet,
     updateGamePost,
-    deleteGamePost
+    deleteGamePost,
+    getGamesByPlatform,
+    getGamesByTag
 }
 
 
