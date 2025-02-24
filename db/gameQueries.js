@@ -10,13 +10,13 @@ async function getGame(gameId) {
   return rows;
 };
 
-async function insertGame(title, release_year, min_players, max_players) {
-  const result = await pool.query("INSERT INTO games (title, release_year, min_players, max_players) VALUES ($1, $2, $3, $4) RETURNING id", [title, release_year, min_players, max_players]);
+async function insertGame(title, release_year, min_players, max_players, image_url) {
+  const result = await pool.query("INSERT INTO games (title, release_year, min_players, max_players, image_url) VALUES ($1, $2, $3, $4, $5) RETURNING id", [title, release_year, min_players, max_players, image_url]);
   return result.rows[0].id;
 }
 
-async function updateGame(gameId, title, release_year, min_players, max_players) {
-  await pool.query("UPDATE games SET (title, release_year, min_players, max_players) = ($2, $3, $4, $5) WHERE  id = ($1)", [gameId, title, release_year, min_players, max_players]);
+async function updateGame(gameId, title, release_year, min_players, max_players, image_url) {
+  await pool.query("UPDATE games SET (title, release_year, min_players, max_players, image_url) = ($2, $3, $4, $5, $6) WHERE  id = ($1)", [gameId, title, release_year, min_players, max_players, image_url]);
 }
 
 async function deleteGame(gameId) {

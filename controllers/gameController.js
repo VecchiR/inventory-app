@@ -5,7 +5,7 @@ const links = require('../routes/links');
 
 async function getAllGames(req, res) {
     const games = await gamesDb.getAllGames();
-    res.render("main", { title: "Mini gameboard", games, links });
+    res.render("main", { title: "All Games", games, links });
 };
 
 async function getGame(req, res) {
@@ -35,9 +35,10 @@ async function createGamePost(req, res) {
     const release_year = req.body.release_year;
     const min_players = req.body.min_players;
     const max_players = req.body.max_players;
+    const image_url = req.body.image_url;
 
     try {
-        const gameId = await gamesDb.insertGame(title, release_year, min_players, max_players);
+        const gameId = await gamesDb.insertGame(title, release_year, min_players, max_players, image_url);
 
         if (Array.isArray(req.body.platforms)) {
             req.body.platforms.map(async plat => await gamesDb.insertGamePlatform(gameId, Number(plat)));
@@ -70,7 +71,8 @@ async function updateGamePost(req, res) {
     const release_year = req.body.release_year;
     const min_players = req.body.min_players;
     const max_players = req.body.max_players;
-    await gamesDb.updateGame(gameId, title, release_year, min_players, max_players);
+    const image_url = req.body.image_url;
+    await gamesDb.updateGame(gameId, title, release_year, min_players, max_players, image_url);
 
 
     const checkedPlatforms = [];
